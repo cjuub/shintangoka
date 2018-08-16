@@ -1,3 +1,3 @@
 #!/bin/bash
 
-FLASK_APP=shintangoka.py flask run
+./shintangoka.py known_words.txt new_words.txt
