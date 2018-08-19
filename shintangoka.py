@@ -82,11 +82,11 @@ def _load_file(file_path: Path) -> List[str]:
     """
     Loads each line from the file and returns it as a list.
     """
-    with open(file_path, 'a+') as fp:
+    with open(str(file_path), 'a+') as fp:
         # create file if it does not exist
         pass
 
-    with open(file_path, 'r') as fp:
+    with open(str(file_path), 'r', encoding='utf-8') as fp:
         return [line.strip() for line in fp]
 
 
@@ -94,7 +94,7 @@ def _save_file(file_path: Path, word_list: List[str]):
     """
     Saves the list of words to the file, one word per line.
     """
-    with open(file_path, 'w+') as fp:
+    with open(str(file_path), 'w+') as fp:
         for word in word_list:
             fp.write(word + '\n')
 
@@ -103,7 +103,7 @@ def _append_word_to_file(file_path: Path, word: str):
     """
     Appends the single word to a new line at the end of the file.
     """
-    with open(file_path, 'a+') as fp:
+    with open(str(file_path), 'a+') as fp:
         fp.write(word + '\n')
 
 
