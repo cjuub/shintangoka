@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
-from flask import Flask
+from flask import Flask, request
 from pathlib import Path
 from typing import List
 
@@ -13,12 +13,18 @@ known_words = []
 
 @app.route('/')
 def show_commands():
-    return 'Welcome to shintangoka!\n\n \
-            /known_words - list known words\n \
-            /new_words - list new words\n \
-            /add_word/<word> - adds word to list of new words\n \
-            /flush_new - moves all new words to list of known words\n'
-
+    return 'Welcome to shintangoka!</br>\
+            </br>\
+            /known_words - list known words</br>\
+            /new_words - list new words</br>\
+            /add_word - adds word in POST field "word" to list of new words</br>\
+            /flush_new - moves all new words to list of known words</br>\
+            </br>\
+            <form action="/add_word" method="POST">\
+                New word:</br>\
+                <input type="text" name="word">\
+            </form>\n'
+            
 
 @app.route('/known_words')
 def known_words():
@@ -36,11 +42,13 @@ def new_words():
     return '\n'.join(new_words) + '\n'
 
 
-@app.route('/add_word/<string:word>')
-def add_word(word: str):
+@app.route('/add_word', methods=['POST'])
+def add_word():
     """
     Adds the specified word to the list of new words.
     """
+    word = request.form['word']
+
     if word in known_words:
         return '\'{0}\' is an already known word!\n'.format(word)
 
@@ -114,6 +122,7 @@ def main():
     known_words = _load_file(Path(known_words_file))
     new_words = _load_file(Path(new_words_file))
 
+    app.config['JSON_AS_ASCII'] = False
     app.run()
 
 
