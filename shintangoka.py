@@ -123,7 +123,7 @@ def main():
     new_words = _load_file(Path(new_words_file))
 
     app.config['JSON_AS_ASCII'] = False
-    app.run()
+    app.run(host='0.0.0.0', debug=False)
 
 
 if __name__ == '__main__':
